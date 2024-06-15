@@ -135,7 +135,7 @@ Let's set them up now!
 
     sleeper.sleep_medium();
 
-    display_set_config_status(&mut username, &mut email, username_output, email_output);
+    display_set_config_status(&mut username, &mut email, username_output, email_output, &sleeper);
 }
 
 fn display_set_config_status(
@@ -143,15 +143,18 @@ fn display_set_config_status(
     email: &mut String,
     username_output: Output,
     email_output: Output,
+    sleeper: &Sleeper
 ) {
     if username_output.status.success() {
         println!("Success! Set Git username to '{}'.", username);
+        sleeper.sleep_medium();
     } else {
         eprintln!("Failed to set Git username.");
     }
 
     if email_output.status.success() {
         println!("Success! Set Git email to '{}'.", email);
+        sleeper.sleep_medium();
     } else {
         eprintln!("Failed to set Git email.");
     }

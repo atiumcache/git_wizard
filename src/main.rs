@@ -16,7 +16,7 @@ fn main() {
 }
 
 fn receive_user_input() -> String {
-    println!("What operation do you want to perform?");
+    println!("\nWhat operation do you want to perform?");
     let mut input = String::new();
     io::stdin()
         .read_line(&mut input)
