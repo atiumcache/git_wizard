@@ -1,0 +1,14 @@
+[package]
+name = "git_wizard"
+version = "0.1.0"
+edition = "2021"
+authors = ["Andrew Attilio <aattilio@pm.me>"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+colored = "2.1.0"
+
+[[bin]]
+name = "git_wizard"
+path = "src/main.rs"
