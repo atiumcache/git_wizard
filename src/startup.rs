@@ -1,6 +1,6 @@
 extern crate colored;
 
-use std::process::{Command, exit};
+use std::process::{Command, exit, Output};
 use std::{io, str};
 use std::io::Write;
 use colored::*;
@@ -29,6 +29,7 @@ fn is_git_initialized() -> Result<bool, std::io::Error> {
 
 
 fn prompt_initialize_git() {
+
     println!("\nNo Git repository found in the current directory. Do you \
     want to initialize a new Git repository? (y/n)");
 
@@ -45,11 +46,11 @@ fn prompt_initialize_git() {
 
 
 fn initialize_git() {
+    let sleeper = Sleeper::new();
+
     println!("\nRunning command: \n\t{}", "git init".cyan());
-    let output = Command::new("git")
-        .arg("init")
-        .output()
-        .expect("Failed to execute git init command");
+    let output = run_git_init();
+    sleeper.sleep_medium();
 
     if output.status.success() {
         println!("\nSuccess! Git repository initialized.");
@@ -61,13 +62,17 @@ fn initialize_git() {
     }
 }
 
+fn run_git_init() -> Output {
+    Command::new("git")
+        .arg("init")
+        .output()
+        .expect("Failed to execute git init command")
+}
+
 
 // Check if global username and email are set.
 fn check_global_config() -> bool {
-    let output = Command::new("git")
-        .args(&["config", "--list", "--show-origin"])
-        .output()
-        .expect("Failed to execute command");
+    let output = run_git_config_show_origin();
 
     if !output.status.success() {
         eprintln!("Command failed with error: {}", str::from_utf8(&output
@@ -92,6 +97,13 @@ fn check_global_config() -> bool {
     return username_set && email_set;
 }
 
+fn run_git_config_show_origin() -> Output {
+    Command::new("git")
+        .args(&["config", "--list", "--show-origin"])
+        .output()
+        .expect("Failed to execute command")
+}
+
 
 fn setup_global_config() {
     println!(
@@ -100,6 +112,7 @@ Your global config variables are not set.
 Let's set them up now!
         "#
     );
+    let sleeper = Sleeper::new();
 
     let mut username = String::new();
     let mut email = String::new();
@@ -107,6 +120,34 @@ Let's set them up now!
     prompt_for_username(&mut username);
     prompt_for_email(&mut email);
 
+    display_global_config_commands(&mut username, &mut email);
+
+     // Set Git username
+    let username_output = run_git_config_username(&mut username);
+
+    let email_output = run_git_config_email(&mut email);
+
+    sleeper.sleep_medium();
+
+    display_set_config_status(&mut username, &mut email, username_output, email_output);
+}
+
+
+fn display_set_config_status(username: &mut String, email: &mut String, username_output: Output, email_output: Output) {
+    if username_output.status.success() {
+        println!("Success! Set Git username to '{}'.", username);
+    } else {
+        eprintln!("Failed to set Git username.");
+    }
+
+    if email_output.status.success() {
+        println!("Success! Set Git email to '{}'.", email);
+    } else {
+        eprintln!("Failed to set Git email.");
+    }
+}
+
+fn display_global_config_commands(username: &mut String, email: &mut String) {
     println!("\nRunning commands:");
     println!(
         "{}{}\n{}{}\n",
@@ -115,35 +156,26 @@ Let's set them up now!
         "\tgit config --global user.email ".cyan(),
         email.cyan()
     );
+}
 
-     // Set Git username
-    let username_output = Command::new("git")
-        .arg("config")
-        .arg("--global")
-        .arg("user.name")
-        .arg(username.clone())
-        .output()
-        .expect("Failed to set Git username");
-
-    let email_output = Command::new("git")
+fn run_git_config_email(mut email: &mut String) -> Output {
+    Command::new("git")
         .arg("config")
         .arg("--global")
         .arg("user.email")
         .arg(email.clone())
         .output()
-        .expect("Failed to set Git email");
+        .expect("Failed to set Git email")
+}
 
-    if username_output.status.success() {
-            println!("Success! Set Git username to '{}'.", username);
-        } else {
-            eprintln!("Failed to set Git username.");
-        }
-
-    if email_output.status.success() {
-            println!("Success! Set Git email to '{}'.", email);
-        } else {
-            eprintln!("Failed to set Git email.");
-        }
+fn run_git_config_username(mut username: &mut String) -> Output {
+    Command::new("git")
+        .arg("config")
+        .arg("--global")
+        .arg("user.name")
+        .arg(username.clone())
+        .output()
+        .expect("Failed to set Git username")
 }
 
 

@@ -12,9 +12,9 @@ pub struct Sleeper {
 impl Sleeper {
     pub fn new() -> Self {
         Sleeper {
-            short: Duration::from_millis(100),
-            medium: Duration::from_millis(500),
-            long: Duration::from_secs(1),
+            short: Duration::from_millis(300),
+            medium: Duration::from_millis(1000),
+            long: Duration::from_secs(2),
         }
     }
 
