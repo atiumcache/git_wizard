@@ -6,7 +6,6 @@ use std::io::{self};
 
 use git_wizard::startup;
 
-
 fn main() {
     println!("\nWelcome to Git Wizard! 🧙");
     startup::startup_check();
@@ -15,7 +14,6 @@ fn main() {
         user_input = receive_user_input();
     }
 }
-
 
 fn receive_user_input() -> String {
     println!("What operation do you want to perform?");
@@ -26,7 +24,6 @@ fn receive_user_input() -> String {
 
     return input;
 }
-
 
 fn validate_input(user_input: String) -> bool {
     let valid_inputs: HashSet<i32> = [1, 2, 3, 4].iter().cloned().collect();
