@@ -6,7 +6,7 @@ use colored::*;
 use std::io::Write;
 use std::process::{exit, Command, Output};
 use std::{io, str};
-use dialoguer::Confirm;
+
 
 /// Check for global git config variables
 /// and an initialized git repository.
@@ -14,59 +14,6 @@ pub fn startup_check() {
     if !check_global_config() {
         setup_global_config();
     }
-
-    match is_git_initialized() {
-        Ok(false) => prompt_initialize_git(),
-        Ok(true) => (),
-        Err(e) => eprintln!("Error checking if Git is initialized: {}", e),
-    }
-}
-
-fn is_git_initialized() -> Result<bool, std::io::Error> {
-    let current_dir = std::env::current_dir()?;
-    let git_dir = current_dir.join(".git");
-
-    Ok(git_dir.exists() && git_dir.is_dir())
-}
-
-fn prompt_initialize_git() {
-    let confirmation = Confirm::new()
-        .with_prompt("\nNo Git repository found in the current directory. \
-        \nDo you want to initialize a new Git repository?")
-        .interact()
-        .unwrap();
-
-    if confirmation {
-        initialize_git()
-    } else {
-        println!("Git repository initialization skipped. Ending program.");
-        exit(0);
-    }
-}
-
-/// Initialize git in the current working directory.
-fn initialize_git() {
-    let sleeper = Sleeper::new();
-
-    println!("\nRunning command: \n\t{}", "git init".cyan());
-    let output = run_git_init();
-    sleeper.sleep_medium();
-
-    if output.status.success() {
-        println!("\nSuccess! Git repository initialized.");
-    } else {
-        eprintln!(
-            "Failed to initialize Git repository: {}",
-            String::from_utf8_lossy(&output.stderr)
-        );
-    }
-}
-
-fn run_git_init() -> Output {
-    Command::new("git")
-        .arg("init")
-        .output()
-        .expect("Failed to execute git init command")
 }
 
 // Check if global username and email are set.

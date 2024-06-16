@@ -1,4 +1,3 @@
-use dialoguer::{theme::ColorfulTheme, Select};
 use crossterm::{event::{self, Event, KeyCode, KeyEvent}, cursor, terminal, ExecutableCommand};
 use std::io::Result;
 use colored::*;

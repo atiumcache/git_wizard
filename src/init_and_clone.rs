@@ -1,8 +1,9 @@
 use dialoguer::{Input};
-use std::process::Command;
+use std::process::{Command, Output};
 use colored::*;
 use std::io::Result;
 use crate::utils::{clear_screen, display_banner, read_key_selection};
+use ::{sleeper};
 
 pub fn main_menu() -> Result<()> {
         loop {
@@ -34,14 +35,29 @@ fn display_initialization_and_cloning_menu() -> Result<()> {
     Ok(())
 }
 
-fn initialize_repository() -> Result<()> {
-    let output = Command::new("git")
+/// Initialize git in the current working directory.
+fn initialize_repository() {
+    let sleeper = sleeper::Sleeper::new();
+
+    println!("\nRunning command: \n\t{}", "git init".cyan());
+    let output = run_git_init();
+    sleeper.sleep_medium();
+
+    if output.status.success() {
+        println!("\nSuccess! Git repository initialized.");
+    } else {
+        eprintln!(
+            "Failed to initialize Git repository: {}",
+            String::from_utf8_lossy(&output.stderr)
+        );
+    }
+}
+
+fn run_git_init() -> Output {
+    Command::new("git")
         .arg("init")
         .output()
-        .expect("Failed to execute command");
-    println!("{}", String::from_utf8_lossy(&output.stdout));
-
-    Ok(())
+        .expect("Failed to execute git init command")
 }
 
 fn clone_repository() -> Result<()> {
