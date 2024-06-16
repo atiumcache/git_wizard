@@ -1,10 +1,12 @@
 extern crate colored;
+extern crate dialoguer;
 
 use crate::sleeper::Sleeper;
 use colored::*;
 use std::io::Write;
 use std::process::{exit, Command, Output};
 use std::{io, str};
+use dialoguer::Confirm;
 
 /// Check for global git config variables
 /// and an initialized git repository.
@@ -28,18 +30,14 @@ fn is_git_initialized() -> Result<bool, std::io::Error> {
 }
 
 fn prompt_initialize_git() {
-    println!(
-        "\nNo Git repository found in the current directory. Do you \
-    want to initialize a new Git repository? (y/n)"
-    );
+    let confirmation = Confirm::new()
+        .with_prompt("\nNo Git repository found in the current directory. Do you \
+    want to initialize a new Git repository?")
+        .interact()
+        .unwrap();
 
-    let mut input = String::new();
-    io::stdin()
-        .read_line(&mut input)
-        .expect("Failed to read line");
-
-    if input.trim().eq_ignore_ascii_case("y") {
-        initialize_git();
+    if confirmation {
+        initialize_git()
     } else {
         println!("Git repository initialization skipped. Ending program.");
         exit(0);
