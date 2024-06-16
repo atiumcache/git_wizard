@@ -31,8 +31,8 @@ fn is_git_initialized() -> Result<bool, std::io::Error> {
 
 fn prompt_initialize_git() {
     let confirmation = Confirm::new()
-        .with_prompt("\nNo Git repository found in the current directory. Do you \
-    want to initialize a new Git repository?")
+        .with_prompt("\nNo Git repository found in the current directory. \
+        \nDo you want to initialize a new Git repository?")
         .interact()
         .unwrap();
 
