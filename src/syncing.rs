@@ -1,43 +1,56 @@
-use dialoguer::{Input, Select};
+use dialoguer::{Input};
 use std::process::Command;
 use colored::Colorize;
+use std::io::Result;
+use crate::utils::{clear_screen, display_banner, read_key_selection};
 
-pub fn synchronization_menu() {
-    let options = vec![
-        "View Remote Repositories",
-        "Add Remote Repository",
-        "Push Changes",
-        "Pull Changes",
-        "Fetch Changes",
-    ];
+pub fn synchronization_menu() -> Result<()> {
+    loop {
+        display_synchronization_menu()?;
 
-    let selection = Select::new()
-        .with_prompt("Select a command")
-        .items(&options)
-        .interact()
-        .unwrap();
+        let selection = read_key_selection(&["1", "2", "3", "4", "m", "q"])?;
 
-    match selection {
-        0 => view_remotes(),
-        1 => add_remote(),
-        2 => push_changes(),
-        3 => pull_changes(),
-        4 => fetch_changes(),
-        _ => println!("{}",
-            "Invalid selection".red()),
+        match selection.as_str() {
+            "1" => push_changes()?,
+            "2" => pull_changes()?,
+            "3" => fetch_changes()?,
+            "4" => view_remotes()?,
+            "m" => break,
+            "q" => {
+                println!("Exiting...");
+                std::process::exit(0);
+            }
+            _ => println!("{}", "Invalid selection".bright_red()),
+        }
     }
+    Ok(())
 }
 
-fn view_remotes() {
+fn display_synchronization_menu() -> Result<()> {
+    // Clear the terminal screen
+    clear_screen();
+    display_banner();
+
+    println!("{}", "[1] Push Changes".bright_cyan());
+    println!("{}", "[2] Pull Changes".bright_cyan());
+    println!("{}", "[3] Fetch Changes".bright_cyan());
+    println!("{}", "[4] View Remotes".bright_cyan());
+    println!("{}", "[m] Back to Main Menu".bright_yellow());
+    println!("{}", "[q] Quit".bright_red());
+    Ok(())
+}
+
+fn view_remotes() -> Result<()> {
     let output = Command::new("git")
         .arg("remote")
         .arg("-v")
         .output()
         .expect("Failed to execute command");
     println!("{}", String::from_utf8_lossy(&output.stdout));
+    Ok(())
 }
 
-fn add_remote() {
+fn add_remote() -> Result<()> {
     let name: String = Input::new()
         .with_prompt("Enter the remote name")
         .interact_text()
@@ -55,9 +68,10 @@ fn add_remote() {
         .output()
         .expect("Failed to execute command");
     println!("{}", String::from_utf8_lossy(&output.stdout));
+    Ok(())
 }
 
-fn push_changes() {
+fn push_changes() -> Result<()> {
     let remote: String = Input::new()
         .with_prompt("Enter the remote name")
         .interact_text()
@@ -74,9 +88,10 @@ fn push_changes() {
         .output()
         .expect("Failed to execute command");
     println!("{}", String::from_utf8_lossy(&output.stdout));
+    Ok(())
 }
 
-fn pull_changes() {
+fn pull_changes() -> Result<()> {
     let remote: String = Input::new()
         .with_prompt("Enter the remote name")
         .interact_text()
@@ -93,9 +108,10 @@ fn pull_changes() {
         .output()
         .expect("Failed to execute command");
     println!("{}", String::from_utf8_lossy(&output.stdout));
+    Ok(())
 }
 
-fn fetch_changes() {
+fn fetch_changes() -> Result<()> {
     let remote: String = Input::new()
         .with_prompt("Enter the remote name")
         .interact_text()
@@ -107,4 +123,5 @@ fn fetch_changes() {
         .output()
         .expect("Failed to execute command");
     println!("{}", String::from_utf8_lossy(&output.stdout));
+    Ok(())
 }

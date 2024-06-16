@@ -163,9 +163,9 @@ fn display_global_config_commands(username: &mut String, email: &mut String) {
     println!(
         "{}{}\n{}{}\n",
         "\tgit config --global user.name ".cyan(),
-        username.cyan(),
+        "'username'".cyan(),
         "\tgit config --global user.email ".cyan(),
-        email.cyan()
+        "'email'".cyan()
     );
 }
 

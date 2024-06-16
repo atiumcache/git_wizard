@@ -1,32 +1,48 @@
-use dialoguer::{Input, Select};
+use dialoguer::{Input};
 use std::process::Command;
 use colored::Colorize;
+use std::io::Result;
+use crate::utils::{clear_screen, display_banner, read_key_selection, wait_for_any_key};
 
-pub fn branching_and_merging_menu() {
-    let options = vec![
-        "Create a New Branch",
-        "Switch Branches",
-        "Merge Branches",
-        "Delete Branch",
-    ];
+pub fn branching_and_merging_menu() -> Result<()> {
+    loop {
+        display_branching_and_merging_menu()?;
 
-    let selection = Select::new()
-        .with_prompt("Select a command")
-        .items(&options)
-        .interact()
-        .unwrap();
+        let selection = read_key_selection(&["1", "2", "3", "4", "m", "q"])?;
 
-    match selection {
-        0 => create_branch(),
-        1 => switch_branch(),
-        2 => merge_branch(),
-        3 => delete_branch(),
-        _ => println!("{}",
-            "Invalid selection".red()),
+        match selection.as_str() {
+            "1" => create_branch()?,
+            "2" => switch_branch()?,
+            "3" => merge_branch()?,
+            "4" => delete_branch()?,
+            "m" => break,
+            "q" => {
+                println!("Exiting...");
+                std::process::exit(0);
+            }
+            _ => println!("{}", "Invalid selection".bright_red()),
+        }
+        wait_for_any_key();
+        break;
     }
+    Ok(())
 }
 
-fn create_branch() {
+fn display_branching_and_merging_menu() -> Result<()> {
+        // Clear the terminal screen
+        clear_screen();
+        display_banner();
+
+        println!("{}", "[1] Create a New Branch".bright_cyan());
+        println!("{}", "[2] Switch Branches".bright_cyan());
+        println!("{}", "[3] Merge Branches".bright_cyan());
+        println!("{}", "[4] Delete Branch".bright_cyan());
+        println!("{}", "[m] Back to Main Menu".bright_yellow());
+        println!("{}", "[q] Quit".bright_red());
+        Ok(())
+    }
+
+fn create_branch() -> Result<()> {
     let branch_name: String = Input::new()
         .with_prompt("Enter the new branch name")
         .interact_text()
@@ -42,9 +58,10 @@ fn create_branch() {
     } else {
         println!("{}", String::from_utf8_lossy(&output.stderr).red());
     }
+    Ok(())
 }
 
-fn switch_branch() {
+fn switch_branch() -> Result<()> {
     let branch_name: String = Input::new()
         .with_prompt("Enter the branch name to switch to")
         .interact_text()
@@ -60,9 +77,10 @@ fn switch_branch() {
     } else {
         println!("{}", String::from_utf8_lossy(&output.stderr).red());
     }
+    Ok(())
 }
 
-fn merge_branch() {
+fn merge_branch() -> Result<()> {
     let branch_name: String = Input::new()
         .with_prompt("Enter the branch name to merge")
         .interact_text()
@@ -78,9 +96,10 @@ fn merge_branch() {
     } else {
         println!("{}", String::from_utf8_lossy(&output.stderr).red());
     }
+    Ok(())
 }
 
-fn delete_branch() {
+fn delete_branch() -> Result<()> {
     let branch_name: String = Input::new()
         .with_prompt("Enter the branch name to delete")
         .interact_text()
@@ -97,4 +116,5 @@ fn delete_branch() {
     } else {
         println!("{}", String::from_utf8_lossy(&output.stderr).red());
     }
+    Ok(())
 }

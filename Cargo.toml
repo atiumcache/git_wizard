@@ -8,6 +8,7 @@ authors = ["Andrew Attilio <aattilio@pm.me>"]
 [dependencies]
 colored = "2.1.0"
 dialoguer = "0.11.0"
+crossterm = "0.27.0"
 
 [[bin]]
 name = "git_wizard"
