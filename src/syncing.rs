@@ -1,8 +1,8 @@
-use dialoguer::{Input};
-use std::process::Command;
-use colored::Colorize;
-use std::io::Result;
 use crate::utils::{clear_screen, display_banner, read_key_selection};
+use colored::Colorize;
+use dialoguer::Input;
+use std::io::Result;
+use std::process::Command;
 
 pub fn synchronization_menu() -> Result<()> {
     loop {

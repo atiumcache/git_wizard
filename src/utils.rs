@@ -1,7 +1,11 @@
-use crossterm::{event::{self, Event, KeyCode, KeyEvent}, cursor, terminal, ExecutableCommand};
-use std::io::Result;
 use colored::*;
+use crossterm::{
+    cursor,
+    event::{self, Event, KeyCode, KeyEvent},
+    terminal, ExecutableCommand,
+};
 use std::io;
+use std::io::Result;
 
 pub fn read_key_selection(valid_keys: &[&str]) -> Result<String> {
     use std::io::{self, Write};

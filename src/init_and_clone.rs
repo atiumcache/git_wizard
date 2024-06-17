@@ -1,29 +1,29 @@
-use dialoguer::{Input};
-use std::process::{Command, Output};
-use colored::*;
-use std::io::Result;
 use crate::utils::{clear_screen, display_banner, read_key_selection};
-use ::{sleeper};
+use crate::sleeper;
+use colored::*;
+use dialoguer::Input;
+use std::io::Result;
+use std::process::{Command, Output};
 
 pub fn main_menu() -> Result<()> {
-        loop {
-            display_initialization_and_cloning_menu()?;
+    loop {
+        display_initialization_and_cloning_menu()?;
 
-            let selection = read_key_selection(&["1", "2", "m", "q"])?;
+        let selection = read_key_selection(&["1", "2", "m", "q"])?;
 
-            match selection.as_str() {
-                "1" => initialize_repository()?,
-                "2" => clone_repository()?,
-                "m" => break,
-                "q" => {
-                    println!("Exiting...");
-                    std::process::exit(0);
-                }
-                _ => println!("{}", "Invalid selection".bright_red()),
+        match selection.as_str() {
+            "1" => initialize_repository()?,
+            "2" => clone_repository()?,
+            "m" => break,
+            "q" => {
+                println!("Exiting...");
+                std::process::exit(0);
             }
+            _ => println!("{}", "Invalid selection".bright_red()),
         }
-        Ok(())
     }
+    Ok(())
+}
 
 fn display_initialization_and_cloning_menu() -> Result<()> {
     clear_screen();
@@ -36,7 +36,7 @@ fn display_initialization_and_cloning_menu() -> Result<()> {
 }
 
 /// Initialize git in the current working directory.
-fn initialize_repository() {
+fn initialize_repository() -> Result<()> {
     let sleeper = sleeper::Sleeper::new();
 
     println!("\nRunning command: \n\t{}", "git init".cyan());
@@ -51,6 +51,7 @@ fn initialize_repository() {
             String::from_utf8_lossy(&output.stderr)
         );
     }
+    Ok(())
 }
 
 fn run_git_init() -> Output {

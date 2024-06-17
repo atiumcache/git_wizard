@@ -7,7 +7,6 @@ use std::io::Write;
 use std::process::{exit, Command, Output};
 use std::{io, str};
 
-
 /// Check for global git config variables
 /// and an initialized git repository.
 pub fn startup_check() {
@@ -80,7 +79,13 @@ Let's set them up now!
 
     sleeper.sleep_medium();
 
-    display_set_config_status(&mut username, &mut email, username_output, email_output, &sleeper);
+    display_set_config_status(
+        &mut username,
+        &mut email,
+        username_output,
+        email_output,
+        &sleeper,
+    );
 }
 
 fn display_set_config_status(
@@ -88,7 +93,7 @@ fn display_set_config_status(
     email: &mut String,
     username_output: Output,
     email_output: Output,
-    sleeper: &Sleeper
+    sleeper: &Sleeper,
 ) {
     if username_output.status.success() {
         println!("Success! Set Git username to '{}'.", username);

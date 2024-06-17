@@ -1,7 +1,7 @@
-use std::process::Command;
-use std::io::Result;
-use colored::*;
 use crate::utils::{clear_screen, display_banner, read_key_selection};
+use colored::*;
+use std::io::Result;
+use std::process::Command;
 
 pub fn inspection_and_maintenance_menu() -> Result<()> {
     loop {

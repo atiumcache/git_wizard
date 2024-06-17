@@ -1,8 +1,8 @@
-use dialoguer::{Input};
-use std::process::Command;
-use colored::Colorize;
-use std::io::Result;
 use crate::utils::{clear_screen, display_banner, read_key_selection, wait_for_any_key};
+use colored::Colorize;
+use dialoguer::Input;
+use std::io::Result;
+use std::process::Command;
 
 pub fn branching_and_merging_menu() -> Result<()> {
     loop {
@@ -29,18 +29,18 @@ pub fn branching_and_merging_menu() -> Result<()> {
 }
 
 fn display_branching_and_merging_menu() -> Result<()> {
-        // Clear the terminal screen
-        clear_screen();
-        display_banner();
+    // Clear the terminal screen
+    clear_screen();
+    display_banner();
 
-        println!("{}", "[1] Create a New Branch".bright_cyan());
-        println!("{}", "[2] Switch Branches".bright_cyan());
-        println!("{}", "[3] Merge Branches".bright_cyan());
-        println!("{}", "[4] Delete Branch".bright_cyan());
-        println!("{}", "[m] Back to Main Menu".bright_yellow());
-        println!("{}", "[q] Quit".bright_red());
-        Ok(())
-    }
+    println!("{}", "[1] Create a New Branch".bright_cyan());
+    println!("{}", "[2] Switch Branches".bright_cyan());
+    println!("{}", "[3] Merge Branches".bright_cyan());
+    println!("{}", "[4] Delete Branch".bright_cyan());
+    println!("{}", "[m] Back to Main Menu".bright_yellow());
+    println!("{}", "[q] Quit".bright_red());
+    Ok(())
+}
 
 fn create_branch() -> Result<()> {
     let branch_name: String = Input::new()
@@ -54,7 +54,10 @@ fn create_branch() -> Result<()> {
         .output()
         .expect("Failed to execute command");
     if output.status.success() {
-        println!("{}", format!("Branch '{}' created successfully.", branch_name.clone()).green());
+        println!(
+            "{}",
+            format!("Branch '{}' created successfully.", branch_name.clone()).green()
+        );
     } else {
         println!("{}", String::from_utf8_lossy(&output.stderr).red());
     }
@@ -73,7 +76,10 @@ fn switch_branch() -> Result<()> {
         .output()
         .expect("Failed to execute command");
     if output.status.success() {
-        println!("{}", format!("Switched to branch '{}'.", branch_name.clone()).green());
+        println!(
+            "{}",
+            format!("Switched to branch '{}'.", branch_name.clone()).green()
+        );
     } else {
         println!("{}", String::from_utf8_lossy(&output.stderr).red());
     }
@@ -92,7 +98,10 @@ fn merge_branch() -> Result<()> {
         .output()
         .expect("Failed to execute command");
     if output.status.success() {
-        println!("{}", format!("Branch '{}' merged successfully.", branch_name.clone()).green());
+        println!(
+            "{}",
+            format!("Branch '{}' merged successfully.", branch_name.clone()).green()
+        );
     } else {
         println!("{}", String::from_utf8_lossy(&output.stderr).red());
     }
@@ -112,7 +121,10 @@ fn delete_branch() -> Result<()> {
         .output()
         .expect("Failed to execute command");
     if output.status.success() {
-        println!("{}", format!("Branch '{}' deleted successfully.", branch_name.clone()).green());
+        println!(
+            "{}",
+            format!("Branch '{}' deleted successfully.", branch_name.clone()).green()
+        );
     } else {
         println!("{}", String::from_utf8_lossy(&output.stderr).red());
     }

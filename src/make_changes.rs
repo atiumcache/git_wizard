@@ -1,8 +1,8 @@
-use dialoguer::{Input};
-use colored::Colorize;
-use std::process::Command;
-use std::io::Result;
 use crate::utils::{clear_screen, display_banner, read_key_selection};
+use colored::Colorize;
+use dialoguer::Input;
+use std::io::Result;
+use std::process::Command;
 
 pub fn main_menu() -> Result<()> {
     loop {
