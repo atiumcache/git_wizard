@@ -4,7 +4,7 @@ extern crate dialoguer;
 use crate::sleeper::Sleeper;
 use colored::*;
 use std::io::Write;
-use std::process::{exit, Command, Output};
+use std::process::{Command, Output};
 use std::{io, str};
 
 /// Check for global git config variables
@@ -110,7 +110,7 @@ fn display_set_config_status(
     }
 }
 
-fn display_global_config_commands(username: &mut String, email: &mut String) {
+fn display_global_config_commands(_username: &mut String, _email: &mut String) {
     println!("\nRunning commands:");
     println!(
         "{}{}\n{}{}\n",
@@ -123,7 +123,7 @@ fn display_global_config_commands(username: &mut String, email: &mut String) {
 
 /// Returns the output of:
 ///     git config --global user.email <email>
-fn run_git_config_email(mut email: &mut String) -> Output {
+fn run_git_config_email(email: &mut String) -> Output {
     Command::new("git")
         .arg("config")
         .arg("--global")
@@ -135,7 +135,7 @@ fn run_git_config_email(mut email: &mut String) -> Output {
 
 /// Returns the output of:
 ///     git config --global user.name <username>
-fn run_git_config_username(mut username: &mut String) -> Output {
+fn run_git_config_username(username: &mut String) -> Output {
     Command::new("git")
         .arg("config")
         .arg("--global")

@@ -1,7 +1,7 @@
 use colored::*;
 use crossterm::{
     cursor,
-    event::{self, Event, KeyCode, KeyEvent},
+    event::{self},
     terminal, ExecutableCommand,
 };
 use std::io;
