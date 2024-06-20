@@ -3,7 +3,7 @@ use colored::*;
 use std::io::Result;
 use std::process::Command;
 
-pub fn inspection_and_maintenance_menu() -> Result<()> {
+pub fn maintenance_menu() -> Result<()> {
     loop {
         display_inspection_and_maintenance_menu()?;
 

@@ -23,11 +23,11 @@ fn main() -> Result<()> {
         let category_selection = utils::read_key_selection(&["1", "2", "3", "4", "5", "q"])?;
 
         match category_selection.as_str() {
-            "1" => init_and_clone::main_menu()?,
-            "2" => make_changes::main_menu()?,
-            "3" => branching::branching_and_merging_menu()?,
-            "4" => syncing::synchronization_menu()?,
-            "5" => maintenance::inspection_and_maintenance_menu()?,
+            "1" => init_and_clone::init_menu()?,
+            "2" => make_changes::changes_menu()?,
+            "3" => branching::branching_menu()?,
+            "4" => syncing::sync_menu()?,
+            "5" => maintenance::maintenance_menu()?,
             "q" => {
                 println!("Exiting...");
                 break;

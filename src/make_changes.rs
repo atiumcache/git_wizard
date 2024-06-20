@@ -4,7 +4,7 @@ use dialoguer::Input;
 use std::io::Result;
 use std::process::Command;
 
-pub fn main_menu() -> Result<()> {
+pub fn changes_menu() -> Result<()> {
     loop {
         display_making_changes_menu()?;
 

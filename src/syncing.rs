@@ -4,7 +4,7 @@ use dialoguer::Input;
 use std::io::Result;
 use std::process::Command;
 
-pub fn synchronization_menu() -> Result<()> {
+pub fn sync_menu() -> Result<()> {
     loop {
         display_synchronization_menu()?;
 

@@ -5,7 +5,7 @@ use dialoguer::Input;
 use std::io::Result;
 use std::process::{Command, Output};
 
-pub fn main_menu() -> Result<()> {
+pub fn init_menu() -> Result<()> {
     loop {
         display_initialization_and_cloning_menu()?;
 

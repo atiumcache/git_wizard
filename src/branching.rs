@@ -4,7 +4,7 @@ use dialoguer::Input;
 use std::io::Result;
 use std::process::Command;
 
-pub fn branching_and_merging_menu() -> Result<()> {
+pub fn branching_menu() -> Result<()> {
     loop {
         display_branching_and_merging_menu()?;
 
