@@ -19,8 +19,8 @@ To use Git Wizard, you need to have Rust installed on your system. If you don't 
 Clone the repository and build the project:
 
 ```sh
-git clone https://github.com/yourusername/git-wizard.git
-cd git-wizard
+git clone https://github.com/yourusername/git_wizard.git
+cd git_wizard
 cargo build --release
 ```
 
@@ -32,7 +32,7 @@ If you just want to test Git Wizard, you can use the Docker Image here:
 Run the Git Wizard executable:
 
 ```sh
-./target/release/git-wizard
+./target/release/git_wizard
 ```
 
 Git Wizard checks for global environment variables (user.name and user.email). If these are not present on your system, it will prompt you to set them up.
