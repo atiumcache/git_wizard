@@ -1,4 +1,4 @@
-# Git Wizard 🧙
+# 🔮 Git Wizard 🧙
 
 Git Wizard is a command-line tool designed to help beginners find a Git workflow. It provides an intuitive menu-driven interface for common Git operations such as initializing repositories, making changes, branching, merging, and synchronizing with remote repositories.
 
