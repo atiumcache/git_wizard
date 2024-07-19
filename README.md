@@ -2,6 +2,8 @@
 
 Git Wizard is a command-line tool designed to help beginners find a Git workflow. It provides an intuitive menu-driven interface for common Git operations such as initializing repositories, making changes, branching, merging, and synchronizing with remote repositories.
 
+This is a work in progress. There may be bugs or other issues.
+
 ## Features
 
 - **Initialization and Cloning**: Initialize a new Git repository or clone an existing one.
@@ -47,6 +49,11 @@ You will then be greeted with a welcome message and the main menu. Use the menu 
 - **[4] Synchronization**: Push, pull, and fetch changes from remote repositories.
 - **[5] Inspection and Maintenance**: View commit logs, check repository status, and manage stashes.
 - **[q] Exit**: Exit the Git Wizard.
+
+## Future Work
+This is still a work in progress and improvements are planned, including:
+
+- Inform the user of the commands being used, so they can learn how to use Git themselves.
 
 ## Contributing
 
